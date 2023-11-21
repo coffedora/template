@@ -6,24 +6,26 @@ COPY ./.env /tmp/env
 ARG USER=${templateOption:username}
 ARG USERSHELL=${templateOption:shell}
 ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ARG USER_GID=${USER_UID}
 ARG INSTALL_HOMEBREW=true
-RUN cat /tmp/.env >> /etc/enviroment || true \
+RUN cat /tmp/env >> /etc/enviroment || true \
     && chmod +rx /usr/local/bin/* || true \
     && ln -s "$(ls /bin/dnf* | head -n 1)" /usr/local/bin/dnf \
     && dnf -y update \
     && dnf -y install ${USERSHELL} dnf git gh gcc gcc-c++ less ncurses openssh-clients passwd \
         procps procps-ng psmisc rsync shadow-utils strace sudo tar unzip util-linux \
         vim-minimal wget which xz zip \
-    && groupadd --gid $USER_GID ${USER} \
-    && useradd --uid $USER_UID -s /bin/${USERSHELL} --gid $USER_GID -m ${USER} \
+    && groupadd --gid ${USER_GID} ${USER} \
+    && useradd --uid ${USER_UID} -s /bin/${USERSHELL} --gid ${USER_GID} -m ${USER} \
     && chown ${USER} /usr/local/bin/dnf \
+    # if we add user to wheel group, it overrides the GID above
     && usermod -aG wheel ${USER} \
     && echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER} \
     && chmod 0440 /etc/sudoers.d/${USER} \
     && mkdir -p /workspaces && chown -R ${USER} /workspaces \
     && dnf clean all \
     && rm -rf /var/cache/dnf\ 
+    && rm -rfd /tmp/* \
     && passwd -d ${USER}
 USER ${USER}
 ENV PATH "$HOME/bin:$HOME/.local/bin:${PATH}"
