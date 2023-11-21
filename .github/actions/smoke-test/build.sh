@@ -52,4 +52,4 @@ npm install -g @devcontainers/cli
 
 echo "Building Dev Container"
 ID_LABEL="test-container=${TEMPLATE_ID}"
-devcontainer up --id-label ${ID_LABEL} --workspace-folder "${SRC_DIR}"
+devcontainer up --update-remote-user-uid-default off --id-label ${ID_LABEL} --workspace-folder "${SRC_DIR}"
