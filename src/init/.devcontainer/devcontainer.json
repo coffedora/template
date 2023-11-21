@@ -1,4 +1,6 @@
 {
+	"remoteUser": "${templateOption:username}",
+	"containerUser": "${templateOption:username}",
 	"name": "Init Fedora Codespace",
 	"build": {
 		"dockerfile": "Dockerfile"

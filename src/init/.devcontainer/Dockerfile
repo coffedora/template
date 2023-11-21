@@ -18,7 +18,6 @@ RUN cat /tmp/env >> /etc/enviroment || true \
     && groupadd --gid ${USER_GID} ${USER} \
     && useradd --uid ${USER_UID} -s /bin/${USERSHELL} --gid ${USER_GID} -m ${USER} \
     && chown ${USER} /usr/local/bin/dnf \
-    # if we add user to wheel group, it overrides the GID above
     && usermod -aG wheel ${USER} \
     && echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER} \
     && chmod 0440 /etc/sudoers.d/${USER} \
