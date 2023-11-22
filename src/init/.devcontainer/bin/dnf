@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ "$(command -v dnf)" ]; then
+    exec dnf "$@"
+elif [ "$(command -v dnf5)" ]; then
+   echo "replace dnf call with dnf5"
+   exec dnf5 "$@"
+else
+    echo "DNF not found, are you on a Fedora system?"   >&2
+    cat /etc/os-release | grep "ID=fedora" >&2
+    exit 127
+fi

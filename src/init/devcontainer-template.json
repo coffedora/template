@@ -16,16 +16,16 @@
             ],
             "default": "39"
         },
-        "username": {
+        "user": {
             "type": "string",
-            "description": "Name of the home directory owner",
+            "description": "Wheel User Name to login:",
             "proposals": [
                 "vscode",
                 "codespace",
                 "devcontainer",
                 "coffe"
             ],
-            "default": "coffe"
+            "default": "vscode"
         },
         "shell": {
             "type": "string",
@@ -36,6 +36,20 @@
                 "fish"
             ],
             "default": "zsh"
+        },
+        "uid": {
+            "type": "string",
+            "description": "Set UID for new wheel user",
+            "proposals": [
+                "1000",
+                "1001"
+            ],
+            "default": "zsh"
+        },
+        "homebrew": {
+            "type": "boolean",
+            "description": "Perinstall Homebrew package Manager",
+            "default": "false"
         }
     },
     "platforms": [

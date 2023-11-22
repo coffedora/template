@@ -1,10 +1,16 @@
 {
-	"remoteUser": "${templateOption:username}",
-	"containerUser": "${templateOption:username}",
 	"name": "Init Fedora Codespace",
 	"build": {
-		"dockerfile": "Dockerfile"
-	}
+		"dockerfile": "Dockerfile",
+		"args": {
+			"USERNAME":"${templateOption:user}",
+			"USERSHELL":"${templateOption:shell}",
+			"USER_UID":"${templateOption:uid}",
+			"INSTALL_HOMEBREW":"${templateOption:homebrew}"
+		}
+	},
+	"remoteUser": "${templateOption:username}",
+	"containerUser": "${templateOption:username}"
 	// 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
 	// "features": {},
 	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.

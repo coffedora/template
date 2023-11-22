@@ -6,5 +6,6 @@ act:
 	-W .github/workflows/test-pr.yaml
 smoke:
 	@echo "Local Smoketest..."
+	rm -rdf /tmp/init
 	.github/actions/smoke-test/build.sh init
 	.github/actions/smoke-test/test.sh init
