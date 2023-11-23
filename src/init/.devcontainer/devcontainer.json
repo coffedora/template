@@ -1,9 +1,16 @@
 {
-	"remoteUser": "${templateOption:username}",
-	"containerUser": "${templateOption:username}",
+	"remoteUser": "${templateOption:user}",
+	"containerUser": "${templateOption:user}",
 	"name": "Init Fedora Codespace",
 	"build": {
-		"dockerfile": "Dockerfile"
+		"dockerfile": "Dockerfile",
+		"args": {
+			"USERNAME":"${templateOption:user}",
+			"USERSHELL": "${templateOption:shell}",
+			"USER_UID":"${templateOption:uid}",
+			"USER_GID":"${templateOption:uid}",
+			"INSTALL_HOMEBREW":"${templateOption:brew}"
+		}
 	}
 	// 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
 	// "features": {},

@@ -3,38 +3,35 @@ FROM quay.io/fedora/fedora-minimal:${templateOption:imageVariant}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 COPY ./bin/ /usr/local/bin/
 COPY ./.env /tmp/env
-ARG USER=${templateOption:username}
-ARG USERSHELL=${templateOption:shell}
+ARG USERNAME=vscode
+ARG USERSHELL=bash
 ARG USER_UID=1000
 ARG USER_GID=${USER_UID}
 ARG INSTALL_HOMEBREW=true
 RUN cat /tmp/env >> /etc/enviroment || true \
     && chmod +rx /usr/local/bin/* || true \
-    && ln -s "$(ls /bin/dnf* | head -n 1)" /usr/local/bin/dnf \
     && dnf -y update \
-    && dnf -y install ${USERSHELL} dnf git gh gcc gcc-c++ less ncurses openssh-clients passwd \
+    && dnf -y install ${USERSHELL} coreutils git gh gcc gcc-c++ less ncurses openssh-clients passwd \
         procps procps-ng psmisc rsync shadow-utils strace sudo tar unzip util-linux \
         vim-minimal wget which xz zip \
-    && groupadd --gid ${USER_GID} ${USER} \
-    && useradd --uid ${USER_UID} -s /bin/${USERSHELL} --gid ${USER_GID} -m ${USER} \
-    && chown ${USER} /usr/local/bin/dnf \
-    && usermod -aG wheel ${USER} \
-    && echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USER} \
-    && chmod 0440 /etc/sudoers.d/${USER} \
-    && mkdir -p /workspaces && chown -R ${USER} /workspaces \
+    && groupadd --gid ${USER_GID} ${USERNAME} \
+    && useradd --uid ${USER_UID} -s /bin/${USERSHELL} --gid ${USER_GID} -m ${USERNAME} \
+    && usermod -aG wheel ${USERNAME} \
+    && echo "%wheel ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${USERNAME} \
+    && chmod 0440 /etc/sudoers.d/${USERNAME} \
+    && mkdir -p /workspaces && chown -R ${USERNAME} /workspaces \
+    && ln -s /workspaces/ /home/${USERNAME}/workspaces \
+    && chown -R ${USERNAME} /usr/local/bin/ \
+    && chown -R ${USERNAME} /home/${USERNAME}  \
     && dnf clean all \
     && rm -rf /var/cache/dnf\ 
     && rm -rfd /tmp/* \
-    && passwd -d ${USER}
-USER ${USER}
-ENV PATH "$HOME/bin:$HOME/.local/bin:${PATH}"
-# Mount for docker-in-docker 
+    && passwd -d ${USERNAME}
+USER ${USERNAME}
 RUN if  [[ $INSTALL_HOMEBREW == "true" ]]; then \
-    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";fi \
-&& eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" \
-&& ln -s /workspaces/ ~/workspaces
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";fi
+ENV PATH="$HOME/bin:$HOME/.local/bin:/home/linuxbrew/.linuxbrew/bin/:/home/linuxbrew/.linuxbrew/sbin/:$PATH"
 # VOLUME [ "/var/lib/docker/" ]
-# VOLUME [ "/home/linuxbrew/" ]
 # WORKDIR /workspaces
 # CMD  ["/bin/${USERSHELL} -c"]
 LABEL version="0.1.0"
