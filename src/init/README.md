@@ -12,7 +12,7 @@ Fedora Devcontainer designed for Cloud
 | uid | User UID. Default to 1000 | string | 1000 |
 | gid | User GID. Default to UID Value. Will be overriden by wheel group | string | 1000 |
 | shell | Set Users loginshell | string | zsh |
-| brew | Preinstall Homebrew | boolen | true |
+| brew | Preinstall Homebrew | string | true |
 
 
 
