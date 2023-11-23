@@ -8,7 +8,7 @@
 			"USERNAME":"${templateOption:user}",
 			"USERSHELL": "${templateOption:shell}",
 			"USER_UID":"${templateOption:uid}",
-			"USER_GID":"${templateOption:uid}",
+			"USER_GID":"${templateOption:gid}",
 			"INSTALL_HOMEBREW":"${templateOption:brew}"
 		}
 	}
