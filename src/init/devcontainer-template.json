@@ -55,9 +55,13 @@
             "default": "zsh"
         },
         "brew": {
-            "type": "boolen",
+            "type": "string",
             "description": "Preinstall Homebrew",
-            "default": true
+            "enum": [
+                "true",
+                "false"
+            ],
+            "default": "true"
         }
     },
     "platforms": [
