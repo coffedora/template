@@ -27,11 +27,10 @@ RUN cat /tmp/env >> /etc/enviroment || true \
     && rm -rf /var/cache/dnf\ 
     && rm -rfd /tmp/* \
     && passwd -d ${USERNAME}
-# Mount for docker-in-docker 
+USER ${USERNAME}
 RUN if  [[ $INSTALL_HOMEBREW == "true" ]]; then \
     NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";fi
 ENV PATH="$HOME/bin:$HOME/.local/bin:/home/linuxbrew/.linuxbrew/bin/:/home/linuxbrew/.linuxbrew/sbin/:$PATH"
-USER ${USERNAME}
 # VOLUME [ "/var/lib/docker/" ]
 # WORKDIR /workspaces
 # CMD  ["/bin/${USERSHELL} -c"]
