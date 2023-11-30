@@ -5,9 +5,12 @@ act:
 	-s GITHUB_TOKEN="$(gh auth token)" \
 	-W .github/workflows/test-pr.yaml
 smoke:
-	docker rm -f $(docker ps -lq) || true
-	docker system prune -af  || true
 	rm -rdf /tmp/init
+	rm -rdf /tmp/home
+	@docker rmi $(docker images -q --filter=reference="vsc-home*" --format "{{.ID}}") -f  &&\
+	rm -rdf /tmp/init &&\
+	rm -rdf /tmp/home || true
+	docker volume prune -f
 	@echo "Local Smoketest..."
-	.github/actions/smoke-test/build.sh init
-	.github/actions/smoke-test/test.sh init
+	.github/actions/smoke-test/build.sh home
+	.github/actions/smoke-test/test.sh home
