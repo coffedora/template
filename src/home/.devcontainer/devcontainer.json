@@ -1,0 +1,79 @@
+{
+	"name": "Coffedora Go-Workspace",
+	"image": "quay.io/fedora/fedora-minimal:${templateOption:imageVariant}",
+	// 👇 Local Features will be distributed via template and Dev Container compatibility on top of a minimal image
+	// Name is required. Set "Username":"root" to skip user Creation.
+	// Unset values, empty strings or  string of value "false" will skip the part of the feature requireded the value. 
+	// More info: https://containers.dev/implementors/features.
+	"features": {
+		"./local-features/coffedora": {
+			"username":"${templateOption:user}",
+			"usershell": "${templateOption:shell}",
+			"homebrew":"${templateOption:brew}",
+			"docker-in-docker": "${templateOption:docker}",
+			"wsl-ready": "${templateOption:wsl}"
+		}
+	},
+	// Will use the local environment variables to pass to the container. Unset variables will be empty
+	"remoteEnv": {
+		"DOCKER_HOST": "$(docker context inspect --format \"{{.Endpoints.docker.Host}}\"))",
+		"GITHUB_USERNAME": "${localEnv:GITHUB_USERNAME}",
+		"GH_TOKEN": "${localEnv:GH_TOKEN}"
+	},
+	"runArgs": [
+		"--hostname",
+		"devcontainer-${templateOption:user}"
+		// 👇 Uncomment to use an env file instead of passing the variables directly.
+		// "--env-file",
+		// "${localWorkspaceFolder}/.devcontainer/.env"
+	],
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces,type=bind,consistency=cached",
+	"workspaceFolder": "/workspaces",
+	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// 👇 Use 'postCreateCommand' to run commands after the container is created.
+	// 👇 Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// "extensions": [
+			// 	"GitHub.copilot",
+			// 	"GitHub.copilot-chat",
+			// 	"yzhang.markdown-all-in-one",
+			// 	"bierner.markdown-preview-github-styles",
+			// 	"formulahendry.github-actions",
+			// 	"ms-azuretools.vscode-docker"
+			// ],
+			// Applies only to vscode.  Downloads the repo into targetPath and runs  setup.sh to finalize the integration.  
+			"settings": {
+				// "dotfiles.repository": "d1sev/dotfiles",
+				// "dotfiles.targetPath": "~/.local/share/chezmoi",
+				// "dotfiles.installCommand": "setup.sh",
+				// Recommended settings to apply when working in container. Change theme and font to your preference.
+					"files.autoSave": "afterDelay",
+					"workbench.colorTheme": "Catppuccin Mocha",
+					"editor.fontFamily": "'JetbrainsMono Nerd Font', 'FiraCode Nerd Font', 'Hack Nerd Font', 'monospace'",
+					"editor.smoothScrolling": true,
+					"terminal.integrated.fontFamily": "'JetbrainsMono Nerd Font', 'FiraCode Nerd Font', 'Hack Nerd Font', 'monospace'",
+					"terminal.integrated.lineHeight": 1.5,
+					"editor.fontLigatures": true,
+					"editor.lineHeight": 1.5,
+					"editor.minimap.enabled": false,
+					"editor.tabSize": 2,
+					"workbench.iconTheme": "material-icon-theme",
+					"editor.semanticTokenColorCustomizations": {
+						"enabled": true
+					},
+					"editor.semanticHighlighting.enabled": true,
+					"files.eol": "\n",
+					"extensions.ignoreRecommendations": true,
+					"task.problemMatchers.neverPrompt": {
+						"shell": true
+					}
+			}
+		}
+	},
+	//  "comment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"	  
+	"remoteUser": "${templateOption:user}"
+}

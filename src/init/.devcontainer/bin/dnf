@@ -2,8 +2,8 @@
 
 dnf=$(ls /bin/dnf* | head -n 1)
 
-if [ "$(command -v microdnf)" ]; then
-    exec microdnf "$@"
+if [ "$(command -v $dnf)" ]; then
+    exec $dnf "$@"
 elif [ -n "$dnf" ]; then
     exec "$dnf" "$@"
 else
