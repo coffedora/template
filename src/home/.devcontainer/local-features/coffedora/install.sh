@@ -27,9 +27,9 @@ MARKER_FILE="/usr/local/etc/vscode-dev-containers/common"
 FEATURE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 package_list="\
-    coreutils git gcc gcc-c++ less ncurses openssh-clients passwd \
-    procps procps-ng psmisc rsync shadow-utils strace sudo tar unzip util-linux \
-    gnupg2 iproute net-tools ca-certificates rsync openssl-libs krb5-libs libicu zlib \
+    coreutils git gcc gcc-c++ less ncurses  passwd \
+    procps procps-ng psmisc rsync shadow-utils strace sudo tar unzip util-linux\
+    iproute ca-certificates rsync openssl-libs krb5-libs libicu zlib \
     vim-minimal wget which xz zip"
 # Shim to use microdnf if available, otherwise lookup for dnf binary as it may be dnf5 or dnf7
 # # Install dependencies and common used tool in devcontainer
@@ -95,9 +95,9 @@ else
         groupadd --gid $USER_GID $USERNAME
     fi
     if [ "${USER_UID}" = "automatic" ]; then
-        useradd -s /bin/bash --gid $USERNAME -m $USERNAME
+        useradd --gid $USERNAME -m $USERNAME
     else
-        useradd -s /bin/bash --uid $USER_UID --gid $USERNAME -m $USERNAME
+        useradd --uid $USER_UID --gid $USERNAME -m $USERNAME
     fi
     passwd -d ${USERNAME}
 fi

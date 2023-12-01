@@ -1,6 +1,6 @@
 {
 	"name": "Coffedora Go-Workspace",
-	"image": "quay.io/fedora/fedora-minimal:${templateOption:imageVariant}",
+	"image": "quay.io/fedora/python-311-minimal:latest",
 	// 👇 Local Features will be distributed via template and Dev Container compatibility on top of a minimal image
 	// Name is required. Set "Username":"root" to skip user Creation.
 	// Unset values, empty strings or  string of value "false" will skip the part of the feature requireded the value. 
@@ -9,25 +9,11 @@
 		"./local-features/coffedora": {
 			"userName":"${templateOption:user}",
 			"userShell": "${templateOption:shell}",
-			"dockerHostEnv": "${templateOption:docker}",
 			"wslReady": "${templateOption:wsl}",
 			"brewReady": "${templateOption:brew}"
 		}
 	},
 	// Will use the local environment variables to pass to the container. Unset variables will be empty
-	"remoteEnv": {
-		"DOCKER_HOST": "$(docker context inspect --format \"{{.Endpoints.docker.Host}}\"))",
-		"GITHUB_USERNAME": "${localEnv:GITHUB_USERNAME}",
-		"GH_TOKEN": "${localEnv:GH_TOKEN}"
-	},
-	"runArgs": [
-		"--hostname",
-		"devcontainer-${templateOption:user}"
-		// 👇 Uncomment to use an env file instead of passing the variables directly.
-		// "--env-file",
-		// "${localWorkspaceFolder}/.devcontainer/.env"
-	],
-
 	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 	// 👇 Use 'postCreateCommand' to run commands after the container is created.

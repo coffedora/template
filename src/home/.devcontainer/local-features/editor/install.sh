@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 #-------------------------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
-#-------------------------------------------------------------------------------------------------------------
-#
-# ** This script is community supported **
+# This script supposed to configure the devcontainer as development environment
+# 
 # Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/common.md
 # Maintainer: The VS Code and Codespaces Teams
 #
@@ -22,9 +19,8 @@ rm -f /etc/profile.d/00-restore-env.sh
 echo "export PATH=${PATH//$(sh -lc 'echo $PATH')/\$PATH}" > /etc/profile.d/00-restore-env.sh
 chmod +x /etc/profile.d/00-restore-env.sh
 
-
 package_list="\
-    nvim gh"
+    gnupg2 net-tools openssh-clients nvim gh"
 # Shim to use microdnf if available, otherwise lookup for dnf binary as it may be dnf5 or dnf7
 # # Install dependencies and common used tool in devcontainer
 if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then

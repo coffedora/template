@@ -2,6 +2,19 @@
     "id": "editor",
     "version": "0.1.0",
     "name": "Setup VSCode Editor recommendations",
+		"remoteEnv": {
+			"DOCKER_HOST": "$(docker context inspect --format \"{{.Endpoints.docker.Host}}\"))",
+			"GITHUB_USERNAME": "${localEnv:GITHUB_USERNAME}",
+			"GH_TOKEN": "${localEnv:GH_TOKEN}"
+		},
+		"remoteUser": "${localEnv:GITHUB_USERNAME}",
+		"runArgs": [
+			"--hostname",
+			"devcontainer"
+			// 👇 Uncomment to use an env file instead of passing the variables directly.
+			// "--env-file",
+			// "${localWorkspaceFolder}/.devcontainer/.env"
+		],
     "customizations": {
 		// Configure properties specific to VS Code.
 		"vscode": {
@@ -15,7 +28,7 @@
 			],
 			// Applies only to vscode.  Downloads the repo into targetPath and runs  setup.sh to finalize the integration.  
 			"settings": {
-				"dotfiles.repository": "d1sev/dotfiles",
+				"dotfiles.repository": "${localEnv:GITHUB_USERNAME}/dotfiles",
 				"dotfiles.targetPath": "~/.local/share/chezmoi",
 				"dotfiles.installCommand": "setup.sh",
 				// Recommended settings to apply when working in container. Change theme and font to your preference.

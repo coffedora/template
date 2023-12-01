@@ -2,7 +2,6 @@
     "id": "coffedora",
     "version": "0.1.0",
     "name": "Setup Fedora-minimal as devcontainer",
-
     "options": {
         "username": {
             "type": "string",
@@ -15,10 +14,15 @@
             "default": "automatic",
             "description": "Create User. If in automatic mode, determine if a user already exists, if not use vscode"
         },
-        "upgradePackages": {
-            "type": "boolean",
-            "default": true,
-            "description": "Upgrade DNF packages"
+        "userShell": {
+            "type": "string",
+            "default": "Install additional shell and set as Users default shell?",
+            "enum": [
+                "bash",
+                "zsh",
+                "fish"
+            ],
+            "description": "zsh"
         },
         "useruid": {
             "type": "string",
@@ -38,6 +42,11 @@
             "default": "automatic",
             "description": "Enter GID for non-root user"
         },
+        "upgradePackages": {
+            "type": "boolean",
+            "default": true,
+            "description": "Upgrade DNF packages"
+        },
         "wslReady": {
             "type": "boolean",
             "default": true,
@@ -47,25 +56,6 @@
             "type": "boolean",
             "default": true,
             "description": "Runs Homebrew installation and add it to the path"
-        },
-        "userShell": {
-            "type": "string",
-            "default": "Install additional shell and set as Users default shell?",
-            "enum": [
-                "bash",
-                "zsh",
-                "fish"
-            ],
-            "description": "zsh"
-        },
-        "docker": {
-            "type": "boolean",
-            "default": true,
-            "description": "Add packages from non-free Debian repository? (Debian only)"
         }
     }
-    // "remoteEnv": {
-    //     "DOCKER_HOST": "$(docker context inspect --format '{{.Endpoints.docker.Host}}'))",
-    //     "DOCKER_BUILDKIT": "1"
-    // }
 }
