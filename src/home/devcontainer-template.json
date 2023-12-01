@@ -20,12 +20,11 @@
             "type": "string",
             "description": "Name of the home directory owner",
             "proposals": [
-                "root",
                 "codespace",
                 "devcontainer",
                 "vscode"
             ],
-            "default": "root"
+            "default": "vscode"
         },
         "uid": {
             "type": "string",
@@ -59,6 +58,11 @@
             "type": "boolean",
             "description": "Prepare enviroment to be imported as WSL Distro",
             "default": false
+        },
+        "brew": {
+            "type": "boolean",
+            "description": "Prepare enviroment to be imported as WSL Distro",
+            "default": true
         },
         "docker": {
             "description": "Access Docker of Host",

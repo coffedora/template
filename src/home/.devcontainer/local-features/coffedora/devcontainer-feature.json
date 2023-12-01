@@ -20,7 +20,7 @@
             "default": true,
             "description": "Upgrade DNF packages"
         },
-        "uid": {
+        "useruid": {
             "type": "string",
             "proposals": [
                 "1001",
@@ -29,7 +29,7 @@
             "default": "automatic",
             "description": "Enter UID for non-root user"
         },
-        "gid": {
+        "usergid": {
             "type": "string",
             "proposals": [
                 "1001",
@@ -42,6 +42,11 @@
             "type": "boolean",
             "default": true,
             "description": "Create /etc/wsl.conf to enable interop with Windows when imported into WSL2"
+        },
+        "brewReady": {
+            "type": "boolean",
+            "default": true,
+            "description": "Runs Homebrew installation and add it to the path"
         },
         "userShell": {
             "type": "string",

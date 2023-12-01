@@ -16,18 +16,18 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 USERNAME="${USERNAME:-"automatic"}"
-USER_UID="${UID:-"automatic"}"
-USER_GID="${GID:-"automatic"}"
+USER_UID="${USERUID:-"automatic"}"
+USER_GID="${USERGID:-"automatic"}"
 USER_SHELL=${USERSHELL:-"bash"}
 UPGRADE_PACKAGES="${UPGRADEPACKAGES:-"true"}"
 WSL_READY="${WSLREADY:-"false"}"
-BREW_READY="${INSTALL_HOMEBREW:-"false"}"
+BREW_READY="${BREWREADY:-"true"}"
 
 MARKER_FILE="/usr/local/etc/vscode-dev-containers/common"
 FEATURE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 package_list="\
-    coreutils git gh gcc gcc-c++ less ncurses openssh-clients passwd \
+    coreutils git gcc gcc-c++ less ncurses openssh-clients passwd \
     procps procps-ng psmisc rsync shadow-utils strace sudo tar unzip util-linux \
     gnupg2 iproute net-tools ca-certificates rsync openssl-libs krb5-libs libicu zlib \
     vim-minimal wget which xz zip"
@@ -99,6 +99,7 @@ else
     else
         useradd -s /bin/bash --uid $USER_UID --gid $USERNAME -m $USERNAME
     fi
+    passwd -d ${USERNAME}
 fi
 # Add sudo support for non-root user
 if [ "${USERNAME}" != "root" ] && [ "${EXISTING_NON_ROOT_USER}" != "${USERNAME}" ]; then
@@ -106,8 +107,9 @@ if [ "${USERNAME}" != "root" ] && [ "${EXISTING_NON_ROOT_USER}" != "${USERNAME}"
     echo $USERNAME ALL=\(wheel\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME
     chmod 0440 /etc/sudoers.d/$USERNAME
     chown ${USERNAME}:${USERNAME} /home/${USERNAME}
-    chown ${USERNAME}:${USERNAME} /$
     EXISTING_NON_ROOT_USER="${USERNAME}"
+    passwd -d ${USERNAME}
+    echo "EXISTING_NON_ROOT_USER: $EXISTING_NON_ROOT_USER"
 fi
 
 # ** Shell customization section **
@@ -119,6 +121,7 @@ fi
 if  [[ $WSL_READY != "true" ]]; then
     echo "Skip WSL Interop Settings"
 else
+echo "WSL Interop Settings"
 cat << 'EOF' > /etc/wsl.conf
 [boot]
 systemd=true
@@ -218,7 +221,7 @@ fi
 if  [[ $BREW_READY != "true" ]]; then
     echo "Skip Homebrew installation"
 else
-    NONINTERACTIVE=1 /bin/bash su $USERNAME-c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    su $USERNAME -c "NONINTERACTIVE=1 /bin/bash $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"')>> /etc/bash.bashrc
     (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') > /etc/profile.d/brew.sh
     chown -R ${USERNAME}:${USERNAME} /home/linuxbrew/.linuxbrew   
@@ -234,5 +237,4 @@ echo -e "\
     WSLENV=${WSL_READY}"
 echo "Done!"
 dnf clean all
-rm -rf /var/cache/dnf\ 
-rm -rfd /tmp/*
+rm -rf /var/cache/dnf
