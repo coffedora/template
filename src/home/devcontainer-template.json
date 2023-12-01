@@ -47,21 +47,13 @@
         },
         "shell": {
             "type": "string",
-            "description": "Set Users loginshell",
+            "description": "Set Users loginshell.",
             "enum": [
                 "bash",
-                "zsh"
+                "zsh",
+                "fish"
             ],
             "default": "zsh"
-        },
-        "brew": {
-            "type": "string",
-            "description": "Preinstall Homebrew",
-            "enum": [
-                "true",
-                "false"
-            ],
-            "default": "true"
         },
         "wsl": {
             "type": "boolean",

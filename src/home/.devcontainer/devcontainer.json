@@ -7,11 +7,10 @@
 	// More info: https://containers.dev/implementors/features.
 	"features": {
 		"./local-features/coffedora": {
-			"username":"${templateOption:user}",
-			"usershell": "${templateOption:shell}",
-			"homebrew":"${templateOption:brew}",
-			"docker-in-docker": "${templateOption:docker}",
-			"wsl-ready": "${templateOption:wsl}"
+			"userName":"${templateOption:user}",
+			"userShell": "${templateOption:shell}",
+			"dockerHostEnv": "${templateOption:docker}",
+			"wslReady": "${templateOption:wsl}"
 		}
 	},
 	// Will use the local environment variables to pass to the container. Unset variables will be empty
