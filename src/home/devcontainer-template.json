@@ -9,23 +9,23 @@
         "imageVariant": {
             "type": "string",
             "description": "Fedora version:",
-            "proposals": [
-                "39",
-                "40",
-                "rawhide"
+            "enum": [
+                "fedora",
+                "python-311",
+                "nodejs-20"
             ],
-            "default": "39"
+            "default": "nodejs-20"
+
         },
         "user": {
             "type": "string",
             "description": "Name of the home directory owner",
             "proposals": [
-                "root",
                 "codespace",
                 "devcontainer",
                 "vscode"
             ],
-            "default": "root"
+            "default": "vscode"
         },
         "uid": {
             "type": "string",
@@ -47,31 +47,32 @@
         },
         "shell": {
             "type": "string",
-            "description": "Set Users loginshell",
+            "description": "Set Users loginshell.",
             "enum": [
                 "bash",
-                "zsh"
+                "zsh",
+                "fish"
             ],
             "default": "zsh"
-        },
-        "brew": {
-            "type": "string",
-            "description": "Preinstall Homebrew",
-            "enum": [
-                "true",
-                "false"
-            ],
-            "default": "true"
         },
         "wsl": {
             "type": "boolean",
             "description": "Prepare enviroment to be imported as WSL Distro",
-            "default": false
+            "default": true
         },
-        "docker": {
-            "description": "Access Docker of Host",
+        "brew": {
             "type": "boolean",
-            "default": false
+            "description": "Prepare enviroment to be imported as WSL Distro",
+            "default": true
+        },
+        "dnfInstall": {
+            "type": "string",
+            "description": "Add extra dnf Packages.",
+            "proposals": [
+                "gh",
+                "nvim"
+            ],
+            "default": "gh"
         }
     },
     "platforms": [
