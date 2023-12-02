@@ -3,12 +3,18 @@
 
 Fedora Devcontainer designed for reuse of your homeenviroment.
 Features 
-  - Fedora Minimal with common developer tools 
-  - Local enviroment variables
-  - Docker-in-docker Ready
-  - Custom WSL Distro as Code ready*
-  - Homebrew package Manager with cached instllations.
-  - Optional: Adjusted version of https://github.com/devcontainers/features/tree/main/src/go
+  setup-minimal:
+  - Use minimal fedora images as devcontainer
+    - fedoray/fedora-minimal 
+    - fedoray/nodejs-20-minimal
+    - fedora/python-311-minimal
+  - Create Custom User   
+  - Create configuration for import in wsl.
+  - Add Homebrew Support
+  preset-editor:
+  - Use recommended settings and extensions in VSCode
+  - Local Variables Integration
+  golang
 TODO:
   - Rust
   - Java

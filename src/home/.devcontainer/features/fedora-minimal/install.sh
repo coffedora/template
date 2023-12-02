@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
+#
+# Maintainer: d1sev
+# Version: 0.1.0
+# Snippets and Inspiration taken from: 
+#    - https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/common-redhat.sh
+#    - https://github.com/devcontainers/features/tree/main/src/common-utils
+#    - https://github.com/ublue-os/startingpoint
+#    - https://github.com/devcontainers/feature-starter
 #-------------------------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
 #-------------------------------------------------------------------------------------------------------------
-#
-# ** This script is community supported **
-# Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/common.md
-# Maintainer: The VS Code and Codespaces Teams
-#
-# Syntax: ./common-redhat.sh [install zsh flag] [username] [user UID] [user GID] [upgrade packages flag] [install Oh My Zsh! flag]
-
 set -e
 if [ "$(id -u)" -ne 0 ]; then
     echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
@@ -19,6 +19,7 @@ USERNAME="${USERNAME:-"automatic"}"
 USER_UID="${USERUID:-"automatic"}"
 USER_GID="${USERGID:-"automatic"}"
 USER_SHELL=${USERSHELL:-"bash"}
+INSTALL="${DNFINSTALL:-"none"}"
 UPGRADE_PACKAGES="${UPGRADEPACKAGES:-"true"}"
 WSL_READY="${WSLREADY:-"false"}"
 BREW_READY="${BREWREADY:-"true"}"
@@ -26,11 +27,13 @@ BREW_READY="${BREWREADY:-"true"}"
 MARKER_FILE="/usr/local/etc/vscode-dev-containers/common"
 FEATURE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-package_list="\
+DEFAULT_PACKAGES="\
     coreutils git gcc gcc-c++ less ncurses  passwd \
     procps procps-ng psmisc rsync shadow-utils strace sudo tar unzip util-linux\
     iproute ca-certificates rsync openssl-libs krb5-libs libicu zlib \
     vim-minimal wget which xz zip"
+# check if INSTALL is "none" "false" or Empty string. If it's not add INSTALL to DEFAULT_PACKAGES
+
 # Shim to use microdnf if available, otherwise lookup for dnf binary as it may be dnf5 or dnf7
 # # Install dependencies and common used tool in devcontainer
 if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
@@ -39,7 +42,18 @@ if [ "${PACKAGES_ALREADY_INSTALLED}" != "true" ]; then
     if ! dnf --version > /dev/null 2>&1; then
         ln -s $(ls /bin/dnf* | head -n 1) /bin/dnf
     fi
-    dnf install -y ${package_list} $USER_SHELL
+    if  [[ $INSTALL != "none" ]]; then
+        DEFAULT_PACKAGES="${DEFAULT_PACKAGES} ${INSTALL}"
+    fi 
+    if  [[ $USER_SHELL != "bash" ]]; then
+        DEFAULT_PACKAGES="${DEFAULT_PACKAGES} ${USER_SHELL}"
+    fi 
+    mapfile -d ' ' DNF_INSTALL  < <(echo "$DEFAULT_PACKAGES")
+    DNF_INSTALLED=""
+    DNF_FAILED=""
+    for package in "${DNF_INSTALL[@]}"; do
+        dnf install -y $package && DNF_INSTALLED="${DNF_INSTALLED} $package"|| DNF_FAILED="${DNF_FAILED} $package"
+    done
     PACKAGES_ALREADY_INSTALLED="true"
     #get the path of the installed user shell 
     USER_SHELL=$(which ${USER_SHELL})
@@ -234,7 +248,9 @@ echo -e "\
     PACKAGES_ALREADY_INSTALLED=${PACKAGES_ALREADY_INSTALLED}\n\
     EXISTING_NON_ROOT_USER=${EXISTING_NON_ROOT_USER}\n\
     HOMEBREW_INSTALLED=${HOMEBREW_INSTALLED}\n\
+    DNF_INSTALLED=$DNF_INSTALLED\n\
+    DNF_FAILED=$DNF_FAILED\n\
     WSLENV=${WSL_READY}"
 echo "Done!"
 dnf clean all
-rm -rf /var/cache/dnf
+rm -rf /var/cache/*

@@ -15,7 +15,6 @@ jobs:
           filters: |
             init: ./**/init/**
             home: ./**/home/**
-
   test:
     needs: [detect-changes]
     runs-on: ubuntu-latest

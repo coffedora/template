@@ -1,8 +1,8 @@
 {
     "id": "golang",
     "version": "0.1.0",
-    "name": "Go",
-    "documentationURL": "https://github.com/coffedora/features/tree/main/src/go",
+    "name": "Install Go and common Go utilities",
+    "documentationURL": "https://github.com/devcontainers/features/tree/main/src/go",
     "description": "Installs Go and common Go utilities on Fedora. Auto-detects latest version and installs needed dependencies.",
     "options": {
         "version": {

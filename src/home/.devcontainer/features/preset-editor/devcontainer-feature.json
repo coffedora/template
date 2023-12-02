@@ -1,5 +1,5 @@
 {
-    "id": "editor",
+    "id": "preset-editor",
     "version": "0.1.0",
     "name": "Setup VSCode Editor recommendations",
 		"remoteEnv": {
@@ -28,9 +28,9 @@
 			],
 			// Applies only to vscode.  Downloads the repo into targetPath and runs  setup.sh to finalize the integration.  
 			"settings": {
-				"dotfiles.repository": "${localEnv:GITHUB_USERNAME}/dotfiles",
-				"dotfiles.targetPath": "~/.local/share/chezmoi",
-				"dotfiles.installCommand": "setup.sh",
+				// "dotfiles.repository": "${localEnv:GITHUB_USERNAME}/dotfiles",
+				// "dotfiles.targetPath": "~/.local/share/chezmoi",
+				// "dotfiles.installCommand": "setup.sh",
 				// Recommended settings to apply when working in container. Change theme and font to your preference.
 					"files.autoSave": "afterDelay",
 					"workbench.colorTheme": "Catppuccin Mocha",
@@ -54,5 +54,8 @@
 					}
 			}
 		}
-	}
+	},
+	"installsAfter": [
+		"./local-features/coffedora"
+	]
 }

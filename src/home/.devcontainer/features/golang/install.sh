@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# devcontainer/go feature adjusted for Fedora & own needs
+# Maintainer: d1sev
+# Version: 0.1.0
+# Fedora Adjusted version of ghcr.io/devcontainers/features/go
+#    - Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/go.md
+#    - https://github.com/devcontainers/features/blob/main/src/go/install.sh
 #-------------------------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information
+# Licensed under the MIT License. See https://github.com/devcontainers/features/blob/main/LICENSE  for license information.
 #-------------------------------------------------------------------------------------------------------------
-#
-# Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/go.md
-# Maintainer: The VS Code and Codespaces Teams
 
 TARGET_GO_VERSION="${VERSION:-"latest"}"
 GOLANGCILINT_VERSION="${GOLANGCILINTVERSION:-"latest"}"
@@ -19,10 +19,7 @@ INSTALL_GO_TOOLS="${INSTALL_GO_TOOLS:-"true"}"
 # https://www.google.com/linuxrepositories/
 GO_GPG_KEY_URI="https://dl.google.com/linux/linux_signing_key.pub"
 # workaround for images with dnf5
-DNF_BINARY=$(ls /bin/dnf* | head -n 1)
-ln -s $DNF_BINARY /bin/dnf || true
 set -e
-
 
 if [ "$(id -u)" -ne 0 ]; then
     echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
@@ -99,16 +96,6 @@ get_common_setting() {
     fi
     echo "$1=${!1}"
 }
-
-
-# Checks if packages are installed and installs them if not
-check_packages() {
-    if ! dpkg -s "$@" > /dev/null 2>&1; then
-        $DNF_BINARY update -y
-        $DNF_BINARY -y install "$@"
-    fi
-}
-
 
 # Get closest match for version number specified
 find_version_from_git_tags TARGET_GO_VERSION "https://go.googlesource.com/go" "tags/go" "." "true"
@@ -190,8 +177,7 @@ GO_TOOLS="\
     github.com/cweill/gotests/gotests@latest \ 
     github.com/josharian/impl@latest \
     github.com/spf13/cobra-cli@latest \
-    github.com/cosmtrek/air@latest \
-    github.com/melkeydev/go-blueprint@latest"
+    github.com/cosmtrek/air@latest"
 if [ "${INSTALL_GO_TOOLS}" = "true" ]; then
     echo "Installing common Go tools..."
     export PATH=${TARGET_GOROOT}/bin:${PATH}

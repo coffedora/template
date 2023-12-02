@@ -1,7 +1,7 @@
 {
-    "id": "coffedora",
+    "id": "fedora-minimal",
     "version": "0.1.0",
-    "name": "Setup Fedora-minimal as devcontainer",
+    "name": "Sets up a Fedora-minimal to meet requirements for devcontainer",
     "options": {
         "username": {
             "type": "string",
@@ -42,6 +42,15 @@
             "default": "automatic",
             "description": "Enter GID for non-root user"
         },
+        "dnfInstall": {
+            "type": "string",
+            "proposals": [
+                "gh",
+                "none"
+            ],
+            "default": "none",
+            "description": "Install additional packages with DNF"
+        },
         "upgradePackages": {
             "type": "boolean",
             "default": true,
@@ -54,8 +63,8 @@
         },
         "brewReady": {
             "type": "boolean",
-            "default": true,
-            "description": "Runs Homebrew installation and add it to the path"
+            "description": "Runs Homebrew installation and add it to the path",
+            "default": true
         }
     }
 }
