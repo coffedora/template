@@ -1,0 +1,32 @@
+{
+    "id": "prebuild",
+    "version": "0.1.0",
+    "name": "Fedora Codespace",
+    "description": "Fedora Devcontainer designed for Cloud",
+    "documentationURL": "https://github.com/d1sev/template/tree/main/src/init",
+    "licenseURL": "https://github.com/d1sev/template/blob/main/LICENSE",
+    "options": {
+        "user": {
+            "type": "string",
+            "description": "Name of the home directory owner",
+            "proposals": [
+                "codespace",
+                "devcontainer",
+                "vscode"
+            ],
+            "default": "coffedora"
+        },
+        "dnfInstall": {
+            "type": "string",
+            "description": "Add extra dnf Packages.",
+            "proposals": [
+                "gh",
+                "nvim"
+            ],
+            "default": "gh"
+        }
+    },
+    "platforms": [
+        "Fedora"
+    ]
+}
