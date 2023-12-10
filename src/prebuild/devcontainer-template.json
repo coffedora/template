@@ -14,7 +14,7 @@
                 "devcontainer",
                 "vscode"
             ],
-            "default": "coffedora"
+            "default": "${localEnv:GITHUB_USER}"
         },
         "dnfInstall": {
             "type": "string",
