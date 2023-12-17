@@ -16,5 +16,6 @@ npm install -g @devcontainers/cli
 Apply the template in a directory and edit the ARG in Dockerfile. YOu have also to adjust the name in the devcontainer.json
 ```powershell
 devcontainer templates apply -t 'ghcr.io/coffedora/template/init:latest' 
+devcontainer templates apply -t 'ghcr.io/coffedora/template/template:latest' 
 ```
 

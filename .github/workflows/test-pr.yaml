@@ -16,3 +16,4 @@ jobs:
             init: ./**/init/**
             home: ./**/home/**
             prebuild: ./**/prebuild/**
+            template: ./**/template/**

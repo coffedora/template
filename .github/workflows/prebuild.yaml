@@ -3,8 +3,6 @@ on:
     workflow_dispatch:
     push:
         tags:
-            - 'v*.*'
-            - 'template_*'
 env:
     IMAGE_NAME: ghcr.io/${{ github.repository}}
 jobs:
@@ -15,7 +13,7 @@ jobs:
             imageid: ${{ steps.prebuild_image.outputs.id }}
         strategy:
           matrix:
-            templates: [ 'init', 'home',"prebuild"]
+            templates: [ 'template']
         steps:
           - uses: actions/checkout@v4       
           - name: Login Github Registry

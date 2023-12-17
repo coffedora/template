@@ -1,0 +1,34 @@
+{
+	"name": "Coffedora Go-Workspace",
+	"image": "quay.io/fedora/fedora-minimal:39",
+	"features": {
+		"ghcr.io/coffedora/feature/setup:latest": {
+			"userName": "${localEnv:GITHUB_USERNAME}"
+		},
+		"ghcr.io/devcontainers-contrib/features/starship:1": {}
+	},
+	"remoteEnv": {
+		"GH_TOKEN": "${localEnv:GH_TOKEN}",
+		"GITHUB_USERNAME": "${localEnv:GITHUB_USERNAME}"
+	},
+	"runArgs": [
+		"--hostname",
+		"coffe"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"a-h.templ",
+				"quillaja.goasm"
+			],
+			"settings": {
+				// "dotfiles.repository": "${localEnv:GITHUB_USERNAME}/dotfiles",
+				// "dotfiles.targetPath": "~/.local/share/chezmoi",
+				// "dotfiles.installCommand": "setup.sh"
+			}
+		}
+	},
+	"workspaceMount": "source=${localWorkspaceFolder}/,target=/workspaces/,type=bind,consistency=cached",
+	"workspaceFolder": "/workspaces/",
+	"remoteUser": "${localEnv:GITHUB_USERNAME}"
+}
