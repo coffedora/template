@@ -14,7 +14,7 @@
                 "devcontainer",
                 "vscode"
             ],
-            "default": "${localEnv:GITHUB_USER}"
+            "default": "${localEnv:GITHUB_USERNAME}"
         },
         "dnfInstall": {
             "type": "string",
