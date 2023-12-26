@@ -10,7 +10,7 @@ Fedora Devcontainer designed for Cloud
 | userName | Name of the home directory owner | string | ${localEnv:GITHUB_USER} |
 | dnfInstall | Add extra dnf Packages. | string | fzf fd tmux ripgrep nvim |
 | languageSupport | Add extra dnf Packages. | string | automatic |
-| WSLCONFIG | Add extra dnf Packages. | string | true |
+| WSLCONFIG | Add /etc/wsl.config. | string | true |
 | installHomebrew | Add Homebrew Packag manager. | string | true |
 
 
