@@ -1,6 +1,6 @@
 {
     "id": "prebuild",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "name": "Fedora Codespace",
     "description": "Fedora Devcontainer designed for Cloud",
     "documentationURL": "https://github.com/d1sev/template/tree/main/src/init",

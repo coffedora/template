@@ -12,13 +12,17 @@
 #    devcontainer features test --global-scenarios-only .
 set -e
 # Optional: Import test library bundled with the devcontainer CLI
-source dev-container-features-test-lib
+cd $(dirname "$0")
+source test-utils.sh
+
 check "Can use DNF to install packages $(dnf --version)" [ "$(dnf --version)" ]
 check "Minimum required packages" [ "$(which git)" ]
 check "user required packages (gh)" [ "$(which gh)" ]
 # Check REMOTE_USER home directory and settings
-check "Create home" [ $(ls /home) ]
+check "Create home" [ "$(ls /home)" ]
 check "Go $(go version)" [ "$(go version)" ]
+check "Brew in Path $(echo $PATH)" [ "$(echo $PATH | grep "brew")" ]
+check "WSL Config Created" [ "$(cat /etc/wsl.conf)" ]
 # check "Create home directory $(ls /home/vscode/)" [ "$(ls /home/vscode/)" ]
 echo -e "\n"
 # Report result
