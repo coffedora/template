@@ -1,5 +1,5 @@
 {
-	"name": "Coffedora Go-Workspace",
+	"name": "Coffedora Cloud Home",
 	"image": "quay.io/fedora/${templateOption:imageVariant}-minimal:latest",
 	// 👇 Local Features will be distributed via template and Dev Container compatibility on top of a minimal image
 	// Name is required. Set "Username":"root" to skip user Creation.
