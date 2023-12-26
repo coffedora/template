@@ -1,7 +1,7 @@
 
 # Fedora Codespace (home)
 
-Fedora Devcontainer designed for Cloud
+Fedora Devcontainer with local scripts
 
 ## Options
 

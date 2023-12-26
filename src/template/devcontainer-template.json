@@ -1,6 +1,6 @@
 {
     "id": "template",
-    "version": "0.2.0",
+    "version": "0.3.1",
     "name": "Fedora Codespace",
     "description": "Fedora Devcontainer designed for Cloud",
     "documentationURL": "https://github.com/d1sev/template/tree/main/src/init",
@@ -36,7 +36,7 @@
         },
         "WSLCONFIG": {
             "type": "string",
-            "description": "Add extra dnf Packages.",
+            "description": "Add /etc/wsl.config.",
             "enum": [
                 "true",
                 "false"

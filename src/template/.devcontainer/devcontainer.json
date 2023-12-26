@@ -31,6 +31,14 @@
 				"ms-azuretools.vscode-docker"
 			],
 			"settings": {
+				"files.watcherExclude": {
+					"**/.git/objects/**": true,
+					"**/.git/subtree-cache/**": true,
+					"**/node_modules/*/**": true,
+					"**/.hg/store/**": true,
+					"**/58Armory/views/**/*_templ.go": true,
+					"**/58Armory/views/*_templ.go": true,
+				},
 				"files.autoSave": "afterDelay",
 				"editor.smoothScrolling": true,
 				"terminal.integrated.lineHeight": 1.5,
