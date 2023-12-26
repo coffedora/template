@@ -1,10 +1,48 @@
 {
-    "id": "home",
-    "version": "0.1.0",
+    "id": "template",
+    "version": "0.2.0",
     "name": "Fedora Codespace",
     "description": "Fedora Devcontainer designed for Cloud",
     "documentationURL": "https://github.com/d1sev/template/tree/main/src/init",
     "licenseURL": "https://github.com/d1sev/template/blob/main/LICENSE",
+    "options": {
+        "dnfInstall": {
+            "type": "string",
+            "description": "Add extra dnf Packages.",
+            "proposals": [
+                "gh",
+                "nvim"
+            ],
+            "default": "tmux"
+        },
+        "languageSupport": {
+            "type": "string",
+            "description": "Add extra dnf Packages.",
+            "enum": [
+                "go",
+                "automatic"
+            ],
+            "default": "automatic"
+        },
+        "WSLCONFIG": {
+            "type": "string",
+            "description": "Add extra dnf Packages.",
+            "enum": [
+                "true",
+                "false"
+            ],
+            "default": "true"
+        },
+        "installHomebrew":{
+            "type": "string",
+            "description": "Add Homebrew Packag manager.",
+            "enum": [
+                "true",
+                "false"
+            ],
+            "default": "true"
+        }
+    },
     "platforms": [
         "Fedora"
     ]

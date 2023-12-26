@@ -3,9 +3,12 @@
 	"image": "quay.io/fedora/fedora-minimal:39",
 	"features": {
 		"ghcr.io/coffedora/feature/setup:latest": {
-			"userName": "${localEnv:GITHUB_USERNAME}"
-		},
-		"ghcr.io/devcontainers-contrib/features/starship:1": {}
+			"userName": "${localEnv:GITHUB_USERNAME}",
+			"languageSupport": "${templateOption:languageSupport}",
+			"dnfInstall": "${templateOption:dnfInstall}",
+			"WSLCONFIG":"${templateOption:WSLCONFIG}",
+			"installHomebrew": "${templateOption:installHomebrew}"
+		}
 	},
 	"remoteEnv": {
 		"GH_TOKEN": "${localEnv:GH_TOKEN}",
@@ -28,6 +31,7 @@
 			}
 		}
 	},
+	// "postStartCommand": "cd /home/${localEnv:GITHUB_USERNAME} && sh -c \"$(curl -fsLS get.chezmoi.io/lb)\" -- init --apply ${localEnv:GITHUB_USERNAME}/dotfiles.git",
 	"workspaceMount": "source=${localWorkspaceFolder}/,target=/workspaces/,type=bind,consistency=cached",
 	"workspaceFolder": "/workspaces/",
 	"remoteUser": "${localEnv:GITHUB_USERNAME}"
