@@ -1,7 +1,7 @@
 
 # Fedora Codespace (init)
 
-Fedora Devcontainer designed for Cloud
+Fedora Devcontainer minimal Dockerfile Image 
 
 ## Options
 

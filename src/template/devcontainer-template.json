@@ -6,6 +6,16 @@
     "documentationURL": "https://github.com/d1sev/template/tree/main/src/init",
     "licenseURL": "https://github.com/d1sev/template/blob/main/LICENSE",
     "options": {
+        "userName": {
+            "type": "string",
+            "description": "Name of the home directory owner",
+            "proposals": [
+                "codespace",
+                "devcontainer",
+                "vscode"
+            ],
+            "default": "${localEnv:GITHUB_USER}"
+        },
         "dnfInstall": {
             "type": "string",
             "description": "Add extra dnf Packages.",
@@ -13,7 +23,7 @@
                 "gh",
                 "nvim"
             ],
-            "default": "tmux"
+            "default": "fzf fd tmux ripgrep nvim"
         },
         "languageSupport": {
             "type": "string",

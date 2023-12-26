@@ -1,9 +1,9 @@
 {
-	"name": "Coffedora Go-Workspace",
+	"name": "Go Templ Template",
 	"image": "quay.io/fedora/fedora-minimal:39",
 	"features": {
 		"ghcr.io/coffedora/feature/setup:latest": {
-			"userName": "${localEnv:GITHUB_USERNAME}",
+			"userName": "${templateOption:userName}",
 			"languageSupport": "${templateOption:languageSupport}",
 			"dnfInstall": "${templateOption:dnfInstall}",
 			"WSLCONFIG":"${templateOption:WSLCONFIG}",
@@ -22,17 +22,39 @@
 		"vscode": {
 			"extensions": [
 				"a-h.templ",
-				"quillaja.goasm"
+				"quillaja.goasm",
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"yzhang.markdown-all-in-one",
+				"bierner.markdown-preview-github-styles",
+				"formulahendry.github-actions",
+				"ms-azuretools.vscode-docker"
 			],
 			"settings": {
+				"files.autoSave": "afterDelay",
+				"editor.smoothScrolling": true,
+				"terminal.integrated.lineHeight": 1.5,
+				"editor.fontLigatures": true,
+				"editor.lineHeight": 1.5,
+				"editor.minimap.enabled": false,
+				"editor.tabSize": 2,
+				"editor.semanticTokenColorCustomizations": {
+					"enabled": true
+				},
+				"editor.semanticHighlighting.enabled": true,
+				"files.eol": "\n",
+				"extensions.ignoreRecommendations": true,
+				"task.problemMatchers.neverPrompt": {
+					"shell": true
+				}
+		}
 				// "dotfiles.repository": "${localEnv:GITHUB_USERNAME}/dotfiles",
 				// "dotfiles.targetPath": "~/.local/share/chezmoi",
 				// "dotfiles.installCommand": "setup.sh"
 			}
-		}
-	},
+		},
 	// "postStartCommand": "cd /home/${localEnv:GITHUB_USERNAME} && sh -c \"$(curl -fsLS get.chezmoi.io/lb)\" -- init --apply ${localEnv:GITHUB_USERNAME}/dotfiles.git",
 	"workspaceMount": "source=${localWorkspaceFolder}/,target=/workspaces/,type=bind,consistency=cached",
 	"workspaceFolder": "/workspaces/",
-	"remoteUser": "${localEnv:GITHUB_USERNAME}"
+	"remoteUser": "${templateOption:userName}"
 }

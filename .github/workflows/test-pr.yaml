@@ -15,5 +15,4 @@ jobs:
           filters: |
             init: ./**/init/**
             home: ./**/home/**
-            prebuild: ./**/prebuild/**
             template: ./**/template/**
